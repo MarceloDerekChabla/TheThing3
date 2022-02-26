@@ -14,7 +14,7 @@ public class FaceTypeSO : ScriptableObject
     public FacePieceRandomizeSettings leftEyebrowSettings;
     public FacePieceRandomizeSettings rightEyebrowSettings;
 
-    public GameObject head;
+    public GameObject[] headArray;
     public GameObject[] eyeArray;
     public GameObject[] noseArray;
     public GameObject[] mouthArray;

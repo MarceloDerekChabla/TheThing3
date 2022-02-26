@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1131847eff2cb243a7cb6aa826140c1, type: 3}
+  m_Name: FaceInfo
+  m_EditorClassIdentifier: 
+  leftEyeSettings:
+    minPositionChangeAmount: {x: -0.2, y: -0.2}
+    maxPositionChangeAmount: {x: 0.2, y: 0.2}
+    minScaleChangeAmount: {x: -0.2, y: -0.2}
+    maxScaleChangeAmount: {x: 0.2, y: 0.2}
+    minRotationChangeAmount: -15
+    maxRotationChangeAmount: 15
+  rightEyeSettings:
+    minPositionChangeAmount: {x: -0.2, y: -0.2}
+    maxPositionChangeAmount: {x: 0.2, y: 0.2}
+    minScaleChangeAmount: {x: -0.2, y: -0.2}
+    maxScaleChangeAmount: {x: 0.2, y: 0.2}
+    minRotationChangeAmount: -15
+    maxRotationChangeAmount: 15
+  noseSettings:
+    minPositionChangeAmount: {x: -0.2, y: 0}
+    maxPositionChangeAmount: {x: 0.2, y: 0.2}
+    minScaleChangeAmount: {x: -0.2, y: -0.2}
+    maxScaleChangeAmount: {x: 0.2, y: 0.1}
+    minRotationChangeAmount: -10
+    maxRotationChangeAmount: 10
+  mouthSettings:
+    minPositionChangeAmount: {x: -0.2, y: -0.2}
+    maxPositionChangeAmount: {x: 0.2, y: 0}
+    minScaleChangeAmount: {x: -0.4, y: -0.4}
+    maxScaleChangeAmount: {x: 0.4, y: 0.4}
+    minRotationChangeAmount: -15
+    maxRotationChangeAmount: 15
+  leftEarSettings:
+    minPositionChangeAmount: {x: 0, y: -0.2}
+    maxPositionChangeAmount: {x: 0, y: 0.2}
+    minScaleChangeAmount: {x: 0, y: -0.2}
+    maxScaleChangeAmount: {x: 0, y: 0.2}
+    minRotationChangeAmount: 0
+    maxRotationChangeAmount: 0
+  rightEarSettings:
+    minPositionChangeAmount: {x: 0, y: -0.2}
+    maxPositionChangeAmount: {x: 0, y: 0.2}
+    minScaleChangeAmount: {x: 0, y: -0.2}
+    maxScaleChangeAmount: {x: 0, y: 0.2}
+    minRotationChangeAmount: 0
+    maxRotationChangeAmount: 0
+  leftEyebrowSettings:
+    minPositionChangeAmount: {x: -0.05, y: -0.1}
+    maxPositionChangeAmount: {x: 0.05, y: 0.1}
+    minScaleChangeAmount: {x: -0.2, y: -0.2}
+    maxScaleChangeAmount: {x: 0.2, y: 0.2}
+    minRotationChangeAmount: -15
+    maxRotationChangeAmount: 15
+  rightEyebrowSettings:
+    minPositionChangeAmount: {x: -0.1, y: -0.1}
+    maxPositionChangeAmount: {x: 0.1, y: 0.1}
+    minScaleChangeAmount: {x: -0.2, y: -0.2}
+    maxScaleChangeAmount: {x: 0.2, y: 0.2}
+    minRotationChangeAmount: -15
+    maxRotationChangeAmount: 15
+  headArray:
+  - {fileID: 8688507724229899583, guid: f25d3cefec5b4ce4bbdb0500a758971a, type: 3}
+  - {fileID: 8688507724229899583, guid: f7c7b578de341354d8fe8d2bc09b82c1, type: 3}
+  - {fileID: 8688507724229899583, guid: 6ec4e117161af2540a5a48e0fd10df29, type: 3}
+  - {fileID: 8688507724229899583, guid: d24f26d9f9c5ed446a3f43c592918cc9, type: 3}
+  - {fileID: 8688507724229899583, guid: 2b2374ff55121414e8e37fadfceed17f, type: 3}
+  - {fileID: 8688507724229899583, guid: 66c0a6f1851d04b44a0d83729d67ea04, type: 3}
+  eyeArray:
+  - {fileID: 9188934075718369281, guid: 798dd130357db194f863d037c9c448db, type: 3}
+  - {fileID: 9188934075718369281, guid: c4220852d0b73304eb2bc4952141ea9c, type: 3}
+  - {fileID: 9188934075718369281, guid: 53b0a2e6329ff7a43a38e17c9737a37a, type: 3}
+  - {fileID: 9188934075718369281, guid: 07850e9b2bfdf3240a8989819994d490, type: 3}
+  - {fileID: 9188934075718369281, guid: e213a8bdb6f7868449a2358f1ca0450d, type: 3}
+  - {fileID: 9188934075718369281, guid: ab342efd7c9f21945a9d0d103529eef5, type: 3}
+  - {fileID: 9188934075718369281, guid: caa2c50de90e27541a3d3d91cadcec5e, type: 3}
+  - {fileID: 9188934075718369281, guid: 3ab05aaf2f314d8439074a4dc3e856de, type: 3}
+  - {fileID: 9188934075718369281, guid: c1e7a332030793f4388963ab7f7b06bb, type: 3}
+  - {fileID: 9188934075718369281, guid: d763b7af1cb58384da2629498e744203, type: 3}
+  - {fileID: 9188934075718369281, guid: f466b356add3e664d82a1e039e2eb55f, type: 3}
+  noseArray:
+  - {fileID: 5322080290026796566, guid: fe7dd45c4dfa8e14d9db8d9b8f22bc9f, type: 3}
+  - {fileID: 1807939796193457117, guid: 7d51f85c50ff4054bbfd515fad27b8fc, type: 3}
+  - {fileID: 5322080290026796566, guid: 3e9ca47fcd865b149a1338bc9b242b3a, type: 3}
+  - {fileID: 5322080290026796566, guid: c8374e793401af147b625bfe8b1a733c, type: 3}
+  - {fileID: 5322080290026796566, guid: bccee4f9b656cd9469fd21f33afdb48b, type: 3}
+  - {fileID: 5322080290026796566, guid: fc8e1b79108b1eb4a8c8556bb1a573f0, type: 3}
+  - {fileID: 5322080290026796566, guid: 0a59534b0d72f1f40af9d5868fee4703, type: 3}
+  - {fileID: 5322080290026796566, guid: b65ddf21726eab04886a7b7a2c22de89, type: 3}
+  - {fileID: 5322080290026796566, guid: 176d9573a2d198645ba3a973ea2e0c3c, type: 3}
+  - {fileID: 7656810151114216973, guid: 71d4b1cd30396ab4585d0b873456459e, type: 3}
+  mouthArray:
+  - {fileID: 516004214018762909, guid: a446b26560e5c9a4e8d788924ffbe002, type: 3}
+  - {fileID: 516004214018762909, guid: 3b36004e61193e84fa5c33db902ac838, type: 3}
+  - {fileID: 516004214018762909, guid: 05d739feaa0d82a41903dceb05e4ff22, type: 3}
+  - {fileID: 516004214018762909, guid: c359a2c9aa1278f45a3ba355b797f5ef, type: 3}
+  - {fileID: 516004214018762909, guid: 218bc78ace071b64199af6aeb5c71ec5, type: 3}
+  - {fileID: 516004214018762909, guid: c9f05ee21abdddb41a52bb12b1e98ca9, type: 3}
+  - {fileID: 516004214018762909, guid: 54d2d59940b7c4b4b87016b7568ed4a2, type: 3}
+  - {fileID: 516004214018762909, guid: 78c4bcf135a5e1f498dd29eeafa1e7cc, type: 3}
+  - {fileID: 516004214018762909, guid: dd870d88861859442820def9b33404d0, type: 3}
+  - {fileID: 516004214018762909, guid: 86db9a4474884f642ba3159b09b63786, type: 3}
+  - {fileID: 516004214018762909, guid: a151c1cb1019518459b4e5f4b822d7ec, type: 3}
+  - {fileID: 516004214018762909, guid: c9485ba215dc4a94ba79eb2505e0a75b, type: 3}
+  - {fileID: 516004214018762909, guid: 87a3efda7bcca754c8422e8da38d8082, type: 3}
+  - {fileID: 516004214018762909, guid: 4f959e9249ba4e44b900092b07e35eaf, type: 3}
+  earArray:
+  - {fileID: 2861495992729819964, guid: 8f4d452b42e386046b41a11e997b2275, type: 3}
+  - {fileID: 2861495992729819964, guid: 65c84d88816dcd249a64b469afee8988, type: 3}
+  - {fileID: 2861495992729819964, guid: fba536aea38443243b79f38017cc3b04, type: 3}
+  - {fileID: 2861495992729819964, guid: 7fb60fbfa336dbb4ba21ad87e788c36a, type: 3}
+  - {fileID: 2861495992729819964, guid: 961a33043e7e2e24da0e1c6714cff4b1, type: 3}
+  - {fileID: 2861495992729819964, guid: 59bee33ff832b9449a6848b7a2a69eb4, type: 3}
+  - {fileID: 2861495992729819964, guid: 46432650c37d60e4a8a7f61e439dba09, type: 3}
+  - {fileID: 2861495992729819964, guid: 7032c7ae74dd5b74abf8ef4fe1289b4d, type: 3}
+  - {fileID: 2861495992729819964, guid: 0c003d51afbfc65408b836e3dd113ae6, type: 3}
+  - {fileID: 2861495992729819964, guid: b012437dbc8458b49ba5c48cf80c890c, type: 3}
+  eyebrowArray:
+  - {fileID: 6217349673965676224, guid: a41aa027ed3bb634f8f154013ea4f681, type: 3}
+  - {fileID: 6217349673965676224, guid: d6dcf5ae083c4e942b8085c8c368a8f2, type: 3}
+  - {fileID: 6217349673965676224, guid: 6d70445692c0a1245af9d8987381a657, type: 3}
+  - {fileID: 6217349673965676224, guid: 703c0e456e699e6449f559357693d1e5, type: 3}
+  - {fileID: 6217349673965676224, guid: 4b8eb5fcaafb1b34d8f4f15b6ed27a16, type: 3}
+  - {fileID: 6217349673965676224, guid: 88b4608812a7c0c4f97799dad5ec5a4c, type: 3}
+  - {fileID: 6217349673965676224, guid: d46d50618936ead4fbe3e6d1f38bbe11, type: 3}
+  - {fileID: 6217349673965676224, guid: 3897f0f9bf77f4f41abde3adb134967d, type: 3}
+  - {fileID: 6217349673965676224, guid: 2d0d339a82e573647ab9a9b7dcf4092d, type: 3}
+  - {fileID: 6217349673965676224, guid: e0a7a3af907458b429cc63bd0e3694b1, type: 3}
+  - {fileID: 6217349673965676224, guid: b2de820f34a3139429cdab0162e956ee, type: 3}
+  - {fileID: 6217349673965676224, guid: 578147e772cb8fd4a9f3f169db552070, type: 3}

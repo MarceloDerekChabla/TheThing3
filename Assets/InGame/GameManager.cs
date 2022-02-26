@@ -5,6 +5,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public GameState gameState {get; private set;}
     public float introTime;
     public float lookingTime;
     public float choosingTime;
@@ -17,8 +18,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        text.text = "Look at this picture. Memorize their face or else we might lose it all.";
-        faceGenerator.GenerateRandomFace();
         StartIntroTimer();
     }
 
@@ -29,6 +28,9 @@ public class GameManager : MonoBehaviour
 
     IEnumerator IntroTimer()
     {
+        gameState = GameState.INTRO;
+        text.text = "Look at this picture. Memorize their face or else we might lose it all.";
+        faceGenerator.GenerateRandomFace();
         yield return new WaitForSeconds(introTime - 1f);
         text.text = " ";
         FadeOut();
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LookingTimer()
     {
+        gameState = GameState.LOOKING;
         yield return new WaitForSeconds(lookingTime);
         StartIntermissionTimer();
     }
@@ -54,6 +57,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator IntermissionTimer()
     {
+        gameState = GameState.INTERMISSION;
         FadeIn();
         yield return new WaitForSeconds(1f);
         text.text = "Choose the right person! 2 out of 3 of them are imposters.";
@@ -61,18 +65,35 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(intermissionTime - 1);
         text.text = " ";
         FadeOut();
-        yield return new WaitForSeconds(intermissionTime);
+        yield return new WaitForSeconds(1);
         StartChoosingTimer();
     }
 
     public void StartChoosingTimer()
     {
-        StartCoroutine(LookingTimer());
+        StartCoroutine(ChoosingTimer());
     }
 
     IEnumerator ChoosingTimer()
     {
+        gameState = GameState.CHOOSING;
         yield return new WaitForSeconds(choosingTime);
+        gameState = GameState.END;
+        ShowEndPanel();
+    }
+
+    public void CheckForAnswer(int chosenAnswer)
+    {
+        StopCoroutine(ChoosingTimer());
+        if (chosenAnswer == faceGenerator.correctAnswer)
+        {
+            Debug.Log("correct!");
+        }
+        else
+        {
+            Debug.Log("Dumb bitch!");
+        }
+        gameState = GameState.END;
         ShowEndPanel();
     }
 
@@ -90,4 +111,13 @@ public class GameManager : MonoBehaviour
     {
         animator.Play("FadeOut");
     }
+}
+
+public enum GameState
+{
+    INTRO,
+    LOOKING,
+    INTERMISSION,
+    CHOOSING,
+    END
 }

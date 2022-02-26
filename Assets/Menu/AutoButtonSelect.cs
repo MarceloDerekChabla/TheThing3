@@ -15,7 +15,7 @@ public class AutoButtonSelect : MonoBehaviour
 
     public IEnumerator ButtonSelectAfterDelay()
     {
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSecondsRealtime(.1f);
 
         EventSystem eventSystem = EventSystem.current;
 

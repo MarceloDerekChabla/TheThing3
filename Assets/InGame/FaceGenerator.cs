@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class FaceGenerator : MonoBehaviour
 {
-    [SerializeField] Transform left;
+    [SerializeField] Transform[] positionArray;
     [SerializeField] Transform middle;
-    [SerializeField] Transform right;
-    [SerializeField] FaceTypeSO[] heads;
 
     [SerializeField] FacePieceSavedSettings savedLeftEyeSettings;
     [SerializeField] FacePieceSavedSettings savedRightEyeSettings;
@@ -18,12 +16,14 @@ public class FaceGenerator : MonoBehaviour
     [SerializeField] FacePieceSavedSettings savedLeftEyebrowSettings;
     [SerializeField] FacePieceSavedSettings savedRightEyebrowSettings;
 
+    public RandomizerSettings randomSettings;
     public SavedFace savedFace;
 
     FacePieceType facePieceType;
 
     GameObject createdHead;
-    public FaceTypeSO chosenHead;
+    public FaceTypeSO faceType;
+    public int correctAnswer {get; private set;}
 
     public void GenerateRandomFace()
     {
@@ -37,26 +37,39 @@ public class FaceGenerator : MonoBehaviour
 
     public void GenerateSavedFaces()
     {
+        int randomPlacement = Random.Range(0, positionArray.Length);
+
+        for (int i = 0; i < positionArray.Length; i++)
+        {
+            if (i == randomPlacement)
+            {
+                GenerateSavedFace(positionArray[i].position, false);
+                correctAnswer = i;
+            }
+            else
+            {
+                GenerateSavedFace(positionArray[i].position, true);
+            }
+        }
         DestroyRandomHead();
-        GenerateSavedFace(left.position, false);
-        GenerateSavedFace(middle.position, true);
-        GenerateSavedFace(right.position, true);
     }
 
-        public void GenerateRandomFace(Vector3 position)
+    public void GenerateRandomFace(Vector3 position)
     {
         //Head
-        GameObject newHead = Instantiate(chosenHead.head, position, Quaternion.identity);
+        int randomHeadChoice = Random.Range(0, faceType.headArray.Length);
+
+        GameObject newHead = Instantiate(faceType.headArray[randomHeadChoice], position, Quaternion.identity);
         FaceSpotInfo faceSpots = newHead.GetComponent<FaceSpotInfo>();
         savedFace.head = Instantiate(newHead, position, Quaternion.identity);;
         createdHead = newHead;
         //Eyes
         facePieceType = FacePieceType.LEFTEYE;
-        GameObject leftEye = GenerateRandomFacePiece(faceSpots.leftEyeSpot, chosenHead.eyeArray, chosenHead.leftEyeSettings);
+        GameObject leftEye = GenerateRandomFacePiece(faceSpots.leftEyeSpot, faceType.eyeArray, faceType.leftEyeSettings);
         savedFace.leftEye = leftEye;
 
         facePieceType = FacePieceType.RIGHTEYE;
-        GameObject rightEye = GenerateSavedFacePiece(faceSpots.rightEyeSpot, savedFace.leftEye, chosenHead.rightEyeSettings, true);
+        GameObject rightEye = GenerateSavedFacePiece(faceSpots.rightEyeSpot, savedFace.leftEye, faceType.rightEyeSettings, true);
         FlipFacePiece(rightEye);
         savedFace.rightEye = rightEye;
 
@@ -64,21 +77,21 @@ public class FaceGenerator : MonoBehaviour
         rightEye.transform.SetParent(createdHead.transform);
         //Nose
         facePieceType = FacePieceType.NOSE;
-        GameObject nose = GenerateRandomFacePiece(faceSpots.noseSpot, chosenHead.noseArray, chosenHead.noseSettings);
+        GameObject nose = GenerateRandomFacePiece(faceSpots.noseSpot, faceType.noseArray, faceType.noseSettings);
         savedFace.nose = nose;
         nose.transform.SetParent(createdHead.transform);
         //Mouth
         facePieceType = FacePieceType.MOUTH;
-        GameObject mouth = GenerateRandomFacePiece(faceSpots.mouthSpot, chosenHead.mouthArray, chosenHead.mouthSettings);
+        GameObject mouth = GenerateRandomFacePiece(faceSpots.mouthSpot, faceType.mouthArray, faceType.mouthSettings);
         savedFace.mouth = mouth;
         mouth.transform.SetParent(createdHead.transform);
         //Ears
         facePieceType = FacePieceType.LEFTEAR;
-        GameObject leftEar = GenerateRandomFacePiece(faceSpots.leftEarSpot, chosenHead.earArray, chosenHead.leftEarSettings);
+        GameObject leftEar = GenerateRandomFacePiece(faceSpots.leftEarSpot, faceType.earArray, faceType.leftEarSettings);
         savedFace.leftEar = leftEar;
 
         facePieceType = FacePieceType.RIGHTEAR;
-        GameObject rightEar = GenerateSavedFacePiece(faceSpots.rightEarSpot, savedFace.leftEar, chosenHead.rightEarSettings, true);
+        GameObject rightEar = GenerateSavedFacePiece(faceSpots.rightEarSpot, savedFace.leftEar, faceType.rightEarSettings, true);
         FlipFacePiece(rightEar);
         savedFace.rightEar = rightEar;
 
@@ -86,13 +99,13 @@ public class FaceGenerator : MonoBehaviour
         rightEar.transform.SetParent(createdHead.transform);
         //Eyebrows
         facePieceType = FacePieceType.LEFTEYEBROW;
-        GameObject leftEyebrow = GenerateRandomFacePiece(faceSpots.leftEyebrowSpot, chosenHead.eyebrowArray,
-        chosenHead.leftEyebrowSettings);
+        GameObject leftEyebrow = GenerateRandomFacePiece(faceSpots.leftEyebrowSpot, faceType.eyebrowArray,
+        faceType.leftEyebrowSettings);
         savedFace.leftEyebrow = leftEyebrow;
 
         facePieceType = FacePieceType.RIGHTEYEBROW;
         GameObject rightEyebrow = GenerateSavedFacePiece(faceSpots.rightEyebrowSpot, savedFace.leftEyebrow,
-        chosenHead.rightEyebrowSettings, true);
+        faceType.rightEyebrowSettings, true);
         FlipFacePiece(rightEyebrow);
         savedFace.rightEyebrow = rightEyebrow;
 
@@ -107,25 +120,25 @@ public class FaceGenerator : MonoBehaviour
         FaceSpotInfo faceSpots = newHead.GetComponent<FaceSpotInfo>();
         //Eyes
         facePieceType = FacePieceType.LEFTEYE;
-        GenerateSavedFacePiece(faceSpots.leftEyeSpot, savedFace.leftEye, chosenHead.leftEyeSettings, randomize);
+        GenerateSavedFacePiece(faceSpots.leftEyeSpot, savedFace.leftEye, randomSettings.leftEyeSettings, randomize);
         facePieceType = FacePieceType.RIGHTEYE;
-        GenerateSavedFacePiece(faceSpots.rightEyeSpot, savedFace.rightEye, chosenHead.rightEyeSettings, randomize);
+        GenerateSavedFacePiece(faceSpots.rightEyeSpot, savedFace.rightEye, randomSettings.rightEyeSettings, randomize);
         //Nose
         facePieceType = FacePieceType.NOSE;
-        GenerateSavedFacePiece(faceSpots.noseSpot, savedFace.nose, chosenHead.noseSettings, randomize);
+        GenerateSavedFacePiece(faceSpots.noseSpot, savedFace.nose, randomSettings.noseSettings, randomize);
         //Mouth
         facePieceType = FacePieceType.MOUTH;
-        GenerateSavedFacePiece(faceSpots.mouthSpot, savedFace.mouth, chosenHead.mouthSettings, randomize);
+        GenerateSavedFacePiece(faceSpots.mouthSpot, savedFace.mouth, randomSettings.mouthSettings, randomize);
         //Ears
         facePieceType = FacePieceType.LEFTEAR;
-        GenerateSavedFacePiece(faceSpots.leftEarSpot, savedFace.leftEar, chosenHead.leftEarSettings, randomize);
+        GenerateSavedFacePiece(faceSpots.leftEarSpot, savedFace.leftEar, randomSettings.leftEarSettings, randomize);
         facePieceType = FacePieceType.RIGHTEAR;
-        GenerateSavedFacePiece(faceSpots.rightEarSpot, savedFace.rightEar, chosenHead.rightEarSettings, randomize);
+        GenerateSavedFacePiece(faceSpots.rightEarSpot, savedFace.rightEar, randomSettings.rightEarSettings, randomize);
         //Eyebrows
         facePieceType = FacePieceType.LEFTEYEBROW;
-        GenerateSavedFacePiece(faceSpots.leftEyebrowSpot, savedFace.leftEyebrow, chosenHead.leftEyebrowSettings, randomize);
+        GenerateSavedFacePiece(faceSpots.leftEyebrowSpot, savedFace.leftEyebrow, randomSettings.leftEyebrowSettings, randomize);
         facePieceType = FacePieceType.RIGHTEYEBROW;
-        GenerateSavedFacePiece(faceSpots.rightEyebrowSpot, savedFace.rightEyebrow, chosenHead.rightEyebrowSettings, randomize);
+        GenerateSavedFacePiece(faceSpots.rightEyebrowSpot, savedFace.rightEyebrow, randomSettings.rightEyebrowSettings, randomize);
     }
 
     GameObject GenerateRandomFacePiece(Transform spot, GameObject[] facePieceArray, FacePieceRandomizeSettings facePieceSettings)
@@ -134,7 +147,7 @@ public class FaceGenerator : MonoBehaviour
         //Debug.Log(randomChoice);
 
         GameObject newFacePiece = Instantiate(facePieceArray[randomChoice], spot.position, Quaternion.identity);
-        RandomizeFacePiece(newFacePiece.transform, facePieceSettings, facePieceType);
+        RandomizeFacePiece(newFacePiece.transform, facePieceSettings, facePieceType, true);
         return newFacePiece;
     }
 
@@ -149,11 +162,12 @@ public class FaceGenerator : MonoBehaviour
             return newFacePiece;
         }
         
-        RandomizeFacePiece(newFacePiece.transform, facePieceSettings, facePieceType);
+        RandomizeFacePiece(newFacePiece.transform, facePieceSettings, facePieceType, false);
         return newFacePiece;
     }
 
-    void RandomizeFacePiece(Transform facePieceTransform, FacePieceRandomizeSettings facePieceSettings, FacePieceType facePieceType)
+    void RandomizeFacePiece(Transform facePieceTransform, FacePieceRandomizeSettings facePieceSettings, FacePieceType facePieceType,
+                            bool saveFace)
     {
         //Changes Face Piece Position
         float randomPosX = Random.Range(facePieceSettings.minPositionChangeAmount.x, facePieceSettings.maxPositionChangeAmount.x);
@@ -175,7 +189,9 @@ public class FaceGenerator : MonoBehaviour
         Quaternion newFaceRotation = Quaternion.Euler(facePieceTransform.rotation.eulerAngles
         + new Vector3(0f, 0f, randomRotation));
         facePieceTransform.rotation = newFaceRotation;
-        SaveToFacePieceSettingSwitcher(facePieceType, randomPosX, randomPosY, randomScaleX, randomScaleY, randomRotation);
+
+        if (saveFace)
+            SaveToFacePieceSettingSwitcher(facePieceType, randomPosX, randomPosY, randomScaleX, randomScaleY, randomRotation);
     }
 
     void SaveToFacePieceSettingSwitcher(FacePieceType facePieceType, float ranPosX,float ranPosY,
@@ -214,7 +230,6 @@ public class FaceGenerator : MonoBehaviour
     FacePieceSavedSettings SaveToFacePieceSettings(float ranPosX,float ranPosY,
                                  float ranScaleX, float ranScaleY, float ranRot)
     {
-        Debug.Log(ranPosX + "before");
         FacePieceSavedSettings savedSettings = new FacePieceSavedSettings
         {
             randomPosX = ranPosX,
@@ -223,8 +238,6 @@ public class FaceGenerator : MonoBehaviour
             randomScaleY = ranScaleY,
             randomRotation = ranRot
         };
-        Debug.Log(savedSettings.randomPosX);
-
         return savedSettings;
     }
 
@@ -264,8 +277,8 @@ public class FaceGenerator : MonoBehaviour
         Vector3 randomnessToPosition = new Vector3(savedSettings.randomPosX, savedSettings.randomPosY, 0f);
         facePieceTransform.position += randomnessToPosition;
 
-        Vector3 randomnessToScale = new Vector3(savedSettings.randomScaleX, savedSettings.randomScaleY, 0f);
-        facePieceTransform.localScale += randomnessToScale;
+        // Vector3 randomnessToScale = new Vector3(savedSettings.randomScaleX, savedSettings.randomScaleY, 0f);
+        // facePieceTransform.localScale += randomnessToScale;
 
         //Changes Face Piece Rotation
         Quaternion newFaceRotation = Quaternion.Euler(facePieceTransform.rotation.eulerAngles
