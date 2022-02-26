@@ -153,7 +153,7 @@ public class FaceGenerator : MonoBehaviour
 
     GameObject GenerateSavedFacePiece(Transform spot, GameObject facePiece, FacePieceRandomizeSettings facePieceSettings, bool randomize)
     {
-        GameObject newFacePiece = Instantiate(facePiece, spot.position, Quaternion.identity);
+        GameObject newFacePiece = Instantiate(facePiece, spot.position, facePiece.transform.rotation);
         newFacePiece.transform.localScale = facePiece.transform.lossyScale;
 
         if (!randomize)
@@ -281,9 +281,9 @@ public class FaceGenerator : MonoBehaviour
         // facePieceTransform.localScale += randomnessToScale;
 
         //Changes Face Piece Rotation
-        Quaternion newFaceRotation = Quaternion.Euler(facePieceTransform.rotation.eulerAngles
-        + new Vector3(0f, 0f, savedSettings.randomRotation));
-        facePieceTransform.rotation = newFaceRotation;
+        // Quaternion newFaceRotation = Quaternion.Euler(facePieceTransform.rotation.eulerAngles
+        // + new Vector3(0f, 0f, savedSettings.randomRotation));
+        // facePieceTransform.rotation = newFaceRotation;
     }
 
     void FlipFacePiece(GameObject facePiece)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,10 +11,14 @@ public class GameManager : MonoBehaviour
     public float lookingTime;
     public float choosingTime;
     public float intermissionTime;
-    [SerializeField] GameObject endPanel;
+    [SerializeField] GameObject winPanel;
+    [SerializeField] GameObject losePanel;
     [SerializeField] Animator animator;
     [SerializeField] TMP_Text text;
     [SerializeField] FaceGenerator faceGenerator;
+    [SerializeField] ScoreInfo score;
+
+    IEnumerator choosingTimerCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -71,7 +76,8 @@ public class GameManager : MonoBehaviour
 
     public void StartChoosingTimer()
     {
-        StartCoroutine(ChoosingTimer());
+        choosingTimerCoroutine = ChoosingTimer();
+        StartCoroutine(choosingTimerCoroutine);
     }
 
     IEnumerator ChoosingTimer()
@@ -79,27 +85,36 @@ public class GameManager : MonoBehaviour
         gameState = GameState.CHOOSING;
         yield return new WaitForSeconds(choosingTime);
         gameState = GameState.END;
-        ShowEndPanel();
+        Lose();
     }
 
     public void CheckForAnswer(int chosenAnswer)
     {
-        StopCoroutine(ChoosingTimer());
+        if (choosingTimerCoroutine != null)
+            StopCoroutine(choosingTimerCoroutine);
+
         if (chosenAnswer == faceGenerator.correctAnswer)
         {
-            Debug.Log("correct!");
+            Win();
         }
         else
         {
-            Debug.Log("Dumb bitch!");
+            Lose();
         }
         gameState = GameState.END;
-        ShowEndPanel();
     }
 
-    public void ShowEndPanel()
+    public void Win()
     {
-        endPanel.SetActive(true);
+        score.CalculateWinScores(text);
+        winPanel.SetActive(true);
+    }
+
+    public void Lose()
+    {
+        score.CalculateLoseScores();
+        text.text = "You lose and you died, loser!";
+        losePanel.SetActive(true);
     }
 
     public void FadeIn()
@@ -110,6 +125,11 @@ public class GameManager : MonoBehaviour
     public void FadeOut()
     {
         animator.Play("FadeOut");
+    }
+
+    public void RestartButton()
+    {
+        SceneManager.LoadScene(1);
     }
 }
 
